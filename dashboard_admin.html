@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Panel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Admin panel</h2>
+        <div>
+            <a href="/users" class="btn btn-outline-primary btn-sm">Foydalanuvchilar</a>
+            <a href="/logout" class="btn btn-outline-danger btn-sm">Chiqish</a>
+        </div>
+    </div>
+
+    <!-- Qidiruv -->
+    <form method="get" action="/admin" class="mb-3">
+        <input type="text" name="search" placeholder="Qidiruv (nomi, tavsifi, o‘qituvchi)" class="form-control" />
+        <button type="submit" class="btn btn-outline-secondary btn-sm mt-2">Qidirish</button>
+    </form>
+
+    <!-- Yangi topshiriq qo‘shish -->
+    <h4>Yangi topshiriq qo‘shish</h4>
+    <form action="/add_task" method="post" enctype="multipart/form-data" class="row g-3 mb-4">
+        <div class="col-md-6">
+            <label class="form-label">Nomi:</label>
+            <input type="text" name="title" class="form-control" required>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Muddati:</label>
+            <input type="date" name="deadline" class="form-control" required>
+        </div>
+        <div class="col-12">
+            <label class="form-label">Tavsifi:</label>
+            <textarea name="description" class="form-control" required></textarea>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">O‘qituvchini tanlang:</label>
+            <select name="assigned_to" class="form-control" required>
+                {% for user in teachers %}
+                    <option value="{{ user[1] }}">{{ user[1] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Topshiriq fayli (ixtiyoriy):</label>
+            <input type="file" name="file" class="form-control">
+        </div>
+        <div class="col-12">
+            <button type="submit" class="btn btn-success">Qo‘shish</button>
+        </div>
+    </form>
+
+    <!-- Topshiriqlar jadvali -->
+    <h4>Berilgan topshiriqlar</h4>
+    <table class="table table-bordered table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Nomi</th>
+                <th>Muddati</th>
+                <th>Tavsifi</th>
+                <th>O‘qituvchi</th>
+                <th>Fayl</th>
+                <th>Izoh</th>
+                <th>Amallar</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks %}
+            <tr>
+                <td>{{ task[0] }}</td>
+                <td>{{ task[1] }}</td>
+                <td>{{ task[2] }}</td>
+                <td>{{ task[3] }}</td>
+                <td>{{ task[4] }}</td>
+                <td>
+                    {% if task[5] %}
+                        <a href="/uploads/{{ task[5] }}" class="btn btn-link btn-sm">Yuklab olish</a>
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+                <td>{{ task[6] or "-" }}</td>
+                <td>
+                    <a href="/edit_task/{{ task[0] }}" class="btn btn-warning btn-sm">✏️ Tahrirlash</a>
+                    <a href="/delete_task/{{ task[0] }}" class="btn btn-danger btn-sm">🗑️ O‘chirish</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% if not tasks %}
+    <div class="alert alert-warning">Topshiriqlar topilmadi.</div>
+    {% endif %}
+
+    <!-- Sahifalash -->
+    <nav aria-label="Sahifalar">
+        <ul class="pagination">
+            {% for page in range(1, total_pages + 1) %}
+                <li class="page-item {% if page == current_page %}active{% endif %}">
+                    <a class="page-link" href="?page={{ page }}{% if search %}&search={{ search }}{% endif %}">{{ page }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </nav>
+</div>
+</body>
+</html>
