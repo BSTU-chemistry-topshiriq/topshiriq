@@ -223,8 +223,29 @@ def users():
 from flask import jsonify
 @app.route('/add_user', methods=['GET', 'POST'])
 def add_user():
-    # foydalanuvchi qo‘shish uchun kod
+    if 'username' not in session or session['role'] != 'admin':
+        return redirect('/login')
 
+    msg = ''
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        role = request.form['role']
+
+        conn = sqlite3.connect('database.db')
+        c = conn.cursor()
+
+        try:
+            c.execute("INSERT INTO users (username, password, role) VALUES (?, ?, ?)",
+                      (username, password, role))
+            conn.commit()
+            msg = 'Foydalanuvchi muvaffaqiyatli qo‘shildi!'
+        except sqlite3.IntegrityError:
+            msg = 'Bu login allaqachon mavjud!'
+        finally:
+            conn.close()
+
+    return render_template('add_user.html', message=msg)
 
 @app.route('/tasks_by_date')
 def tasks_by_date():
