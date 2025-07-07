@@ -2,33 +2,69 @@
 <html lang="uz">
 <head>
     <meta charset="UTF-8">
-    <title>Tizimga kirish</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Tizimga kirish – Kimyo</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: url('https://images.unsplash.com/photo-1618172208284-0214d59c1d5e?auto=format&fit=crop&w=1740&q=80') no-repeat center center fixed;
+            background-size: cover;
+        }
+        .login-container {
+            background-color: rgba(255, 255, 255, 0.95);
+            width: 350px;
+            margin: 100px auto;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+        }
+        h2 {
+            text-align: center;
+            color: #004d40;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            color: #333;
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 6px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+        button {
+            margin-top: 20px;
+            width: 100%;
+            background-color: #00796b;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #004d40;
+        }
+    </style>
 </head>
-<body class="bg-light">
+<body>
+    <div class="login-container">
+        <h2>KIMYO PLATFORMASIGA KIRISH</h2>
+        <form method="POST" action="/login">
+            <label for="username">Login:</label>
+            <input type="text" name="username" id="username" required>
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-4 bg-white p-4 rounded shadow">
-            <h4 class="mb-3 text-center">Tizimga kirish</h4>
-            <form method="post">
-                <div class="mb-3">
-                    <label class="form-label">Login:</label>
-                    <input type="text" name="username" class="form-control" required>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Parol:</label>
-                    <input type="password" name="password" class="form-control" required>
-                </div>
-                {% if message %}
-                    <div class="alert alert-danger">{{ message }}</div>
-                {% endif %}
-                <button type="submit" class="btn btn-primary w-100">Kirish</button>
-            </form>
-        </div>
+            <label for="password">Parol:</label>
+            <input type="password" name="password" id="password" required>
+
+            <button type="submit">Kirish</button>
+        </form>
     </div>
-</div>
-
 </body>
 </html>
