@@ -243,6 +243,27 @@ def add_user():
         conn.close()
 
     return render_template('add_user.html', message=msg)
+@app.route('/edit_user/<int:user_id>', methods=['GET', 'POST'])
+def edit_user(user_id):
+    if 'username' not in session or session['role'] != 'admin':
+        return redirect('/login')
+
+    conn = sqlite3.connect('database.db')
+    c = conn.cursor()
+
+    if request.method == 'POST':
+        password = request.form['password']
+        role = request.form['role']
+        c.execute("UPDATE users SET password=?, role=? WHERE id=?", (password, role, user_id))
+        conn.commit()
+        conn.close()
+        return redirect('/users')
+
+    c.execute("SELECT * FROM users WHERE id=?", (user_id,))
+    user = c.fetchone()
+    conn.close()
+
+    return render_template('edit_user.html', user=user)
 
 @app.route('/tasks_by_date')
 def tasks_by_date():
