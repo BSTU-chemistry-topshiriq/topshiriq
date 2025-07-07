@@ -221,28 +221,23 @@ def users():
     teachers = cur.fetchall()
     return render_template("users.html", teachers=teachers)
 from flask import jsonify
-@app.route('/add_user', methods=['GET', 'POST'])
+@app.route('/add_user', methods=['POST'])
 def add_user():
     if 'username' not in session or session['role'] != 'admin':
         return redirect('/login')
 
-    msg = ''
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        role = request.form['role']
+    username = request.form['username']
+    password = request.form['password']
+    role = request.form['role']
 
-        conn = sqlite3.connect('database.db')
-        c = conn.cursor()
-        try:
-            c.execute("INSERT INTO users (username, password, role) VALUES (?, ?, ?)", (username, password, role))
-            conn.commit()
-            msg = 'Foydalanuvchi qo‘shildi!'
-        except sqlite3.IntegrityError:
-            msg = 'Bunday login allaqachon mavjud!'
-        conn.close()
+    conn = sqlite3.connect('database.db')
+    c = conn.cursor()
+    c.execute("INSERT INTO users (username, password, role) VALUES (?, ?, ?)", (username, password, role))
+    conn.commit()
+    conn.close()
 
-    return render_template('add_user.html', message=msg)
+    return redirect('/users')
+ 
 @app.route('/edit_user/<int:user_id>', methods=['GET', 'POST'])
 def edit_user(user_id):
     if 'username' not in session or session['role'] != 'admin':
