@@ -1,1 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Foydalanuvchini tahrirlash</title>
+</head>
+<body>
+    <h2>Foydalanuvchini tahrirlash</h2>
+    <form method="post">
+        <label>Login: {{ user[1] }}</label><br><br>
+        <label>Yangi parol:</label><br>
+        <input type="password" name="password" required><br><br>
+        <label>Rolni tanlang:</label><br>
+        <select name="role">
+            <option value="admin" {% if user[3] == 'admin' %}selected{% endif %}>Admin</option>
+            <option value="teacher" {% if user[3] == 'teacher' %}selected{% endif %}>O‘qituvchi</option>
+        </select><br><br>
+        <button type="submit">Saqlash</button>
+    </form>
+</body>
+</html>
 
