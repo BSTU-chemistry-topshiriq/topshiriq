@@ -1,17 +1,11 @@
 <!DOCTYPE html>
-<html lang="uz">
-<head>
-    <meta charset="UTF-8">
-    <title>Foydalanuvchi qo‘shish</title>
-</head>
+<html>
+<head><title>Foydalanuvchi qo‘shish</title></head>
 <body>
     <h2>Yangi foydalanuvchi qo‘shish</h2>
-    <form method="POST">
-        <label>Login:</label><br>
-        <input type="text" name="username" required><br>
-        <label>Parol:</label><br>
-        <input type="password" name="password" required><br>
-        <label>Rol:</label><br>
+    <form method="post">
+        <input type="text" name="username" placeholder="Login"><br>
+        <input type="password" name="password" placeholder="Parol"><br>
         <select name="role">
             <option value="teacher">O‘qituvchi</option>
             <option value="admin">Admin</option>
@@ -19,7 +13,8 @@
         <button type="submit">Qo‘shish</button>
     </form>
     {% if message %}
-        <p>{{ message }}</p>
+    <p>{{ message }}</p>
     {% endif %}
 </body>
 </html>
+
