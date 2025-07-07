@@ -234,16 +234,13 @@ def add_user():
 
         conn = sqlite3.connect('database.db')
         c = conn.cursor()
-
         try:
-            c.execute("INSERT INTO users (username, password, role) VALUES (?, ?, ?)",
-                      (username, password, role))
+            c.execute("INSERT INTO users (username, password, role) VALUES (?, ?, ?)", (username, password, role))
             conn.commit()
-            msg = 'Foydalanuvchi muvaffaqiyatli qo‘shildi!'
+            msg = 'Foydalanuvchi qo‘shildi!'
         except sqlite3.IntegrityError:
-            msg = 'Bu login allaqachon mavjud!'
-        finally:
-            conn.close()
+            msg = 'Bunday login allaqachon mavjud!'
+        conn.close()
 
     return render_template('add_user.html', message=msg)
 
