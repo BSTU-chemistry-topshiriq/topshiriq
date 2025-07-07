@@ -245,5 +245,4 @@ def tasks_by_date():
     tasks = [{'id': row[0], 'title': row[1], 'deadline': row[2], 'assigned_to': row[3]} for row in rows]
     return jsonify({'tasks': tasks})
 if __name__ == '__main__':
-    init_db()
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=10000)
