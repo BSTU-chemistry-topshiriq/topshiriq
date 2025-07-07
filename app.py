@@ -221,6 +221,10 @@ def users():
     teachers = cur.fetchall()
     return render_template("users.html", teachers=teachers)
 from flask import jsonify
+@app.route('/add_user', methods=['GET', 'POST'])
+def add_user():
+    # foydalanuvchi qo‘shish uchun kod
+
 
 @app.route('/tasks_by_date')
 def tasks_by_date():
