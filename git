@@ -1,0 +1,3 @@
+git add templates/login.html
+git commit -m "Kirish sahifasi dizayni yangilandi"
+git push
