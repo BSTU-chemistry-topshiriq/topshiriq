@@ -1,0 +1,23 @@
+[http]
+	sslCAInfo = C:/Program Files/Git/mingw64/etc/ssl/certs/ca-bundle.crt
+	sslBackend = openssl
+[diff "astextplain"]
+	textconv = astextplain
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	required = true
+	process = git-lfs filter-process
+[credential]
+	helper = manager
+[core]
+	autocrlf = true
+	fscache = true
+	symlinks = false
+	editor = notepad
+[pull]
+	rebase = false
+[credential "https://dev.azure.com"]
+	useHttpPath = true
+[init]
+	defaultBranch = main
